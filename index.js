@@ -1,3 +1,6 @@
+import { userRouter, express } from './controller/UserController.js'
+import { movieRouter } from './controller/MovieController.js'
+import { mealRouter } from './controller/MealController.js'
 import path from 'path'
 
 const app = express()
@@ -14,6 +17,9 @@ app.use(
     express.urlencoded({ 
     extended: true 
 }))
+app.use('/user', userRouter)
+app.use('/movie', movieRouter)
+app.use('/meal', mealRouter)
 
 app.get('^/$|/AhavaLounge', (req, res) => {
     res.status(200).sendFile(path.resolve('./static/html/index.html'))

@@ -1,9 +1,13 @@
 import { Users } from "./Users.js";
-import { Products } from "./Movies.js";
+import { Movies } from "./Movies.js";
+import { Meals} from  "./Meals.js";
 
 const users = new Users()
-const  products = new Products()
+const movies = new Movies()
+const  meals = new Meals()
+
 export {
     users,
-    products
+    movies,
+    meals
 }
