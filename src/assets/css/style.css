@@ -3,9 +3,13 @@
 
 /* Google font */
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Sacramento&display=swap');
 
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: "Baskervville SC", serif;
+    font-weight: 400;
+    font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -14,18 +18,77 @@
 
 nav {
     padding: 30px;
+    background-color: #532823; 
 }
 
 nav a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #fff !important; 
 }
 
 nav a.router-link-exact-active {
-    color: #42b983;
+    color: #fff !important;
 }
+
 .navbar-title {
+    margin-bottom: 10px;
     font-family: "Sacramento", cursive;
-    font-weight: 400;
-    font-style: normal;
+    color: #fff; 
+    text-align: center;
+    margin: 0;
 }
+
+.navbar {
+    background-color: #532823;
+    padding-top: 10px;
+}
+
+.navbar-left {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+}
+
+.navbar-nav {
+    justify-content: center;
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+.nav-link {
+    color: #fff !important;
+    text-align: center;
+}
+
+.nav-link:hover {
+    background-color: #e2e6ea;
+    color: #000; 
+}
+
+@media (max-width: 991.98px) {
+    .navbar-title {
+        margin-bottom: 15px;
+    }   
+    .navbar-toggler {
+        margin-top: 10px;
+    }   
+    .navbar-collapse {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: #343a40;
+        transition: left 0.3s ease;
+        z-index: 1050;
+    }   
+    .navbar-collapse.show {
+        left: 0;
+    }   
+    .nav-link {
+        color: #fff !important;
+        padding: 15px 20px;
+    }
+}   
