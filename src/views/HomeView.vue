@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <video autoplay muted loop class="background-video">
-      <source src="/videos/background.mp4" type="video/mp4">
+      <source src="https://erin-caitlin.github.io/AhavaImages/videos/backgroundvideo.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <div class="content">
