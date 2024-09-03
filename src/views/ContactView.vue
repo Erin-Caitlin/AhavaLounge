@@ -3,12 +3,12 @@
     <video autoplay muted loop class="background-video">
       <source src="https://erin-caitlin.github.io/AhavaImages/videos/video4.mp4" type="video/mp4">
     </video>
-    <div class="text-center text-white py-5">
+    <div class="text-center text-white py-2">
       <h2>Contact Us</h2>
     </div>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 p-4 rounded shadow contact" data-aos="fade-up">
-          <h4 class="text-center mb-4 text-dark">Message Us</h4>
+          <h4 class="text-center mb-4 text-white">Message Us</h4>
           <form action="https://formspree.io/f/myzgnzra" method="POST">
             <div class="form-group mb-3">
               <div class="row">
@@ -33,16 +33,16 @@
           </form>
       </div>
       <div class="col-md-8 reach-us p-4 rounded shadow" data-aos="fade-up">
-          <h4 class="text-center mb-4 text-dark">How to Reach Us</h4>
+          <h4 class="text-center mb-4 text-white">How to Reach Us</h4>
           <div id="details">
             <div class="mb-3">
-              <p><i class="bi bi-envelope text-dark"></i> bookings@ahavalounge.com</p>
+              <p><i class="bi bi-envelope text-white"></i> bookings@ahavalounge.com</p>
             </div>
             <div class="mb-3">
-              <p><i class="bi bi-telephone text-dark"></i> +27 21 123 4567</p>
+              <p><i class="bi bi-telephone text-white"></i> +27 21 123 4567</p>
             </div>
             <div>
-              <p><i class="bi bi-geo-alt text-dark"></i> 123 Film Street,</p>
+              <p><i class="bi bi-geo-alt text-white"></i> 123 Film Street,</p>
               <p>Cinema District,</p>
               <p>Cape Town, 8001</p>
             </div>
@@ -99,8 +99,7 @@ export default {
   border-color: #532823;
 }
 
-.btn-dark,
-.btn-outline-dark {
+.btn-dark {
   background-color: #532823;
   border-color: #532823;
 }
@@ -118,7 +117,7 @@ export default {
 
 .reach-us,
 .contact {
-  background-color: #ffffff3b;
+  background-color: #ffffff1f;
 }
 
 ::placeholder {
