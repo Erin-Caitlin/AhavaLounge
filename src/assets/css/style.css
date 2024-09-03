@@ -13,82 +13,83 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #532823;
 }
 
-nav {
-    padding: 30px;
-    background-color: #532823; 
+
+.navbar {
+  padding: 30px;
+  transition: background-color 0.3s ease; 
+  /* background-color: transparent; */
+  background-color: #532823b4;
 }
+
+
+.navbar.scrolled {
+  background-color: #532823b4;
+}
+
+.navbar-right {
+  margin-left: auto;
+}
+
 
 nav a {
-    font-weight: bold;
-    color: #fff !important; 
+  font-weight: bold;
+  color: #fff !important;
 }
 
 nav a.router-link-exact-active {
-    color: #fff !important;
+  color: #fff !important;
 }
 
 .navbar-title {
-    margin-bottom: 10px;
-    font-family: "Sacramento", cursive;
-    color: #fff; 
-    text-align: center;
-    margin: 0;
-}
-
-.navbar {
-    background-color: #532823b4;
-    padding-top: 10px;
-}
-
-.navbar-left {
-    position: absolute;
-    left: 20px;
-    top: 15px;
+  margin-bottom: 10px;
+  font-family: "Sacramento", cursive;
+  color: #fff;
+  text-align: center;
+  margin: 0;
 }
 
 .navbar-nav {
-    justify-content: center;
+  justify-content: center;
 }
 
 .nav-item {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .nav-link {
-    color: #fff !important;
-    text-align: center;
+  color: #fff !important;
+  text-align: center;
 }
 
 .nav-link:hover {
-    background-color: #e2e6ea;
-    color: #000; 
+    color: #000;
 }
 
 @media (max-width: 991.98px) {
-    .navbar-title {
-        margin-bottom: 15px;
-    }   
-    .navbar-toggler {
-        margin-top: 10px;
-    }   
-    .navbar-collapse {
-        position: fixed;
-        top: 0;
-        left: -250px;
-        width: 250px;
-        height: 100%;
-        background-color: #343a40;
-        transition: left 0.3s ease;
-        z-index: 1050;
-    }   
-    .navbar-collapse.show {
-        left: 0;
-    }   
-    .nav-link {
-        color: #fff !important;
-        padding: 15px 20px;
-    }
-}   
+  .navbar-title {
+    margin-bottom: 15px;
+  }
+  .navbar-toggler {
+    margin-top: 10px;
+  }
+  .navbar-collapse {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #532823b4;
+    transition: left 0.3s ease;
+    z-index: 1050;
+  }
+  .navbar-collapse.show {
+    left: 0;
+  }
+  .nav-link {
+    color: #fff !important;
+    padding: 15px 20px;
+  }
+}

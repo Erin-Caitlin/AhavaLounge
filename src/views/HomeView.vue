@@ -5,7 +5,7 @@
     </video>
     <div class="content">
       <h1 class="display-1">Welcome to Ahava Lounge</h1>
-      <p class="lead">A prestige cinema and restaurant combined, offering you an elegant experience where you can savor gourmet dining and enjoy your favorite movies all in one place.</p>
+      <p class="lead">A prestige cinema and restaurant combined, offering you an elegant experience where you can savour gourmet dining and enjoy your favorite movies all in one place.</p>
       <button type="button">BOOK NOW</button>
     </div>
   </div>
@@ -44,7 +44,6 @@
   justify-content: center;
   height: 100%;
 }
-
 p {
   width: 50%;
 }
