@@ -1,30 +1,35 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import { movies } from '../model/index.js'
-import { verifyAToken } from '../middleware/AuthenticateUser.js'
+import express from 'express';
+import bodyParser from 'body-parser';
+import { Movies } from '../model/Movies.js'; 
 
-const movieRouter = express.Router()
+const moviesRouter = express.Router();
+moviesRouter.use(bodyParser.json());
 
-movieRouter.use(bodyParser.json())
+const movies = new Movies();
 
-movieRouter.get('/', (req, res) => {
-    movies.fetchMovies(req, res)
-})
-movieRouter.get('/recent', (req, res) => {
-    movies.recentMovies(req, res)
-})
-movieRouter.get('/:id',  (req, res) => {
-    movies.fetchMovie(req, res)
-})
-movieRouter.post('/add', (req, res) => {
-    movies.addMovie(req, res)
-})
-movieRouter.patch('/:id', (req, res) => {
-    movies.updateMovie(req, res)
-})
-movieRouter.delete('/:id', (req, res) => {
-    movies.deleteMovie(req, res)
-})
+moviesRouter.get('/', (req, res) => {
+    movies.fetchMovies(req, res);
+});
+
+moviesRouter.get('/recent', (req, res) => {
+    movies.recentMovies(req, res);
+});
+
+moviesRouter.get('/:id', (req, res) => {
+    movies.fetchMovie(req, res);
+});
+
+moviesRouter.post('/add', (req, res) => {
+    movies.addMovie(req, res);
+});
+
+moviesRouter.patch('/:id', (req, res) => {
+    movies.updateMovie(req, res);
+});
+
+moviesRouter.delete('/:id', (req, res) => {
+    movies.deleteMovie(req, res);
+});
 export {
-    movieRouter
-}
+    moviesRouter
+};

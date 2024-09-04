@@ -1,5 +1,5 @@
 import { userRouter, express } from './controller/UserController.js'
-import { movieRouter } from './controller/MovieController.js'
+import { moviesRouter } from './controller/MovieController.js'
 import { mealRouter } from './controller/MealController.js'
 import path from 'path'
 
@@ -18,7 +18,7 @@ app.use(
     extended: true 
 }))
 app.use('/user', userRouter)
-app.use('/movie', movieRouter)
+app.use('/movie', moviesRouter)
 app.use('/meal', mealRouter)
 
 app.get('^/$|/AhavaLounge', (req, res) => {
