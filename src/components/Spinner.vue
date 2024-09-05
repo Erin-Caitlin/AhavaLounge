@@ -17,14 +17,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust as needed */
+    height: 100vh;
   }
   
   .dot {
     width: 12px;
     height: 12px;
     margin: 0 5px;
-    background-color: #fff; /* Dot color */
+    background-color: #fff; 
     border-radius: 50%;
     animation: bounce 1.4s infinite;
   }
