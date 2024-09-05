@@ -4,7 +4,7 @@ class Movies {
     fetchMovies(req, res) {
         try {
             const strQry = `
-            SELECT movieID, mName, mDescription, mCategory, mDuration, ticketPrice
+            SELECT movieID, mImage, mName, mDescription, mCategory, mDuration, ticketPrice
             FROM Movies;
             `
             db.query(strQry, (err, results) => {
@@ -46,7 +46,7 @@ class Movies {
     fetchMovie(req, res) {
         try {
             const strQry = `
-            SELECT movieID, mName, mDescription, mCategory, mDuration, ticketPrice
+            SELECT movieID,mImage, mName, mDescription, mCategory, mDuration, ticketPrice
             FROM Movies
             WHERE movieID = ${req.params.id};
             `
