@@ -23,9 +23,14 @@ const routes = [
     component: () => import('../views/SingleMealView.vue')
   },
   {
-    path: '/admin',
-    name: 'admin',
-    component: () => import('../views/AdminView.vue')
+    path: '/useradmin',
+    name: 'useradmin',
+    component: () => import('../views/UsersAdminView.vue')
+  },
+  {
+    path: '/moviesadmin',
+    name: 'moviesadmin',
+    component: () => import('../views/MoviesAdminView.vue')
   },
   {
     path: '/user-login',

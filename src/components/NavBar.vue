@@ -16,7 +16,13 @@
           <li class="nav-item"><router-link class="nav-link" to="/" @click="handleLinkClick">Home</router-link></li>
           <li class="nav-item"><router-link class="nav-link" to="/about" @click="handleLinkClick">About</router-link></li>
           <li class="nav-item"><router-link class="nav-link" to="/booking" @click="handleLinkClick">Book Now</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" to="/admin" @click="handleLinkClick">Admin</router-link></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+            <ul class="dropdown-menu">
+              <li><router-link class="dropdown-item" to="/useradmin">Users</router-link></li>
+              <li><router-link class="dropdown-item" to="/moviesadmin">Moviess</router-link></li>
+            </ul>
+          </li>
           <li class="nav-item"><router-link class="nav-link" to="/contact" @click="handleLinkClick">Contact</router-link></li>
         </ul>
       </div>
