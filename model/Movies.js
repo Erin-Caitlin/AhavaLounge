@@ -4,7 +4,7 @@ class Movies {
     fetchMovies(req, res) {
         try {
             const strQry = `
-            SELECT movieID, mImage, mName, mDescription, mCategory, mDuration, ticketPrice
+            SELECT movieID, mImage, mName, mDescription, mCategory, mDuration, ticketPrice, ageRestriction, releaseDate
             FROM Movies;
             `
             db.query(strQry, (err, results) => {
@@ -24,7 +24,7 @@ class Movies {
     recentMovies(req, res) {
         try {
             const strQry = `
-            SELECT movieID, mName, mDescription, mCategory, mDuration, ticketPrice
+            SELECT movieID, mName, mDescription, mCategory, mDuration, ticketPrice, ageRestriction, releaseDate
             FROM Movies
             ORDER BY movieID DESC
             LIMIT 5;
@@ -46,7 +46,7 @@ class Movies {
     fetchMovie(req, res) {
         try {
             const strQry = `
-            SELECT movieID,mImage, mName, mDescription, mCategory, mDuration, ticketPrice
+            SELECT movieID,mImage, mName, mDescription, mCategory, mDuration, ticketPrice, ageRestriction, releaseDate
             FROM Movies
             WHERE movieID = ${req.params.id};
             `
