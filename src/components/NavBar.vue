@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid d-flex flex-column align-items-center">
       <div class="navbar-title d-flex justify-content-between align-items-center w-100">
-        <router-link class="navbar-brand" to="/user-login" id="title"><i class="bi bi-person-fill"></i></router-link>
+        <router-link class="navbar-brand" to="/user-register" id="title"><i class="bi bi-person-fill"></i></router-link>
         <h1>Ahava Lounge</h1>
         <router-link class="navbar-brand" to="/order-list" id="user-icon" alt="order"><i class="bi bi-calendar-week"></i></router-link>
       </div>
