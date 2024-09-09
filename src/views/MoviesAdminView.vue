@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid" id="admin-page">
-    <video autoplay muted loop class="background-video">
-      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4">
+    <video autoplay muted loop class="background-video" preload="metadata">
+      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4" loading="lazy">
     </video>
     <div id="movies">
       <h1>Movies Table</h1>
@@ -24,26 +24,12 @@
                   <input type="text" class="form-control" id="movieName" name="movieName" required>
                 </div>
                 <div class="mb-3">
-                  <label for="movieAmount" class="form-label">Amount</label>
-                  <input type="text" class="form-control" id="movieAmount" name="movieAmount" required>
-                  <label for="movieQuantity" class="form-label">Quantity</label>
-                  <input type="number" class="form-control" id="movieQuantity" name="movieQuantity" required>
-                </div>
-                <div class="mb-3">
                   <label for="movieCategory" class="form-label">Category</label>
                   <input type="text" class="form-control" id="movieCategory" name="movieCategory" required>
                 </div>
                 <div class="mb-3">
-                  <label for="moviePassword" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="moviePassword" name="moviePassword" required>
                   <label for="movieImage" class="form-label">Description</label>
                   <input type="text" class="form-control" id="movieImage" name="movieImage" required>
-                </div>
-                <div class="mb-3">
-                  <label for="movieProfile" class="form-label">Profile</label>
-                  <input type="file" class="form-control" id="movieProfile" name="movieProfile">
-                  <label for="mDescription" class="form-label">Image</label>
-                  <input type="file" class="form-control" id="mDescription" name="mDescription">
                 </div>
               </form>
             </div>

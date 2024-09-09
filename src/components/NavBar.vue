@@ -6,12 +6,8 @@
         <h1>Ahava Lounge</h1>
         <router-link class="navbar-brand" to="/order-list" id="user-icon" alt="order"><i class="bi bi-calendar-week"></i></router-link>
       </div>
-      <button class="navbar-toggler" type="button" @click="toggleNavbar" aria-controls="navbarSupportedContent" aria-expanded="isNavbarVisible" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse justify-content-center"
-        :class="{ show: isNavbarVisible }" id="navbarSupportedContent">
+      <button class="navbar-toggler" type="button" @click="toggleNavbar" aria-controls="navbarSupportedContent" aria-expanded="isNavbarVisible" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-center" :class="{ show: isNavbarVisible }" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item"><router-link class="nav-link" to="/" @click="handleLinkClick">Home</router-link></li>
           <li class="nav-item"><router-link class="nav-link" to="/about" @click="handleLinkClick">About</router-link></li>
@@ -78,6 +74,38 @@ h1 {
 }
 .navbar-right {
   margin-left: auto;
+}
+
+.navbar .dropdown-menu {
+  background-color: #532823b4;
+  border: none; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.navbar .dropdown-item {
+  color: #fff;
+  padding: 10px 20px; 
+  font-size: 14px; 
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #422020; 
+  color: #fff; 
+}
+
+.navbar .dropdown-toggle::after {
+  display: none; 
+}
+
+.navbar .nav-item.dropdown {
+  position: relative;
+}
+
+.navbar .dropdown-menu {
+  position: absolute; 
+  top: 100%; 
+  left: 0;
+  width: 100%; 
 }
 
 @media (max-width: 991.98px) {
