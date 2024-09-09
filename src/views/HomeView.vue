@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <video autoplay muted loop class="background-video">
-      <source src="https://erin-caitlin.github.io/AhavaImages/videos/backgroundvideo.mp4" type="video/mp4">
+    <video autoplay muted loop class="background-video" preload="metadata">
+      <source src="https://erin-caitlin.github.io/AhavaImages/videos/backgroundvideo.mp4" type="video/mp4" loading="lazy">
     </video>
     <div class="content">
       <h1 class="display-1">Welcome to Ahava Lounge</h1>

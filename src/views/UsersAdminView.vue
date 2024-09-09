@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid" id="admin-page">
-      <video autoplay muted loop class="background-video">
-        <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4">
+      <video autoplay muted loop class="background-video" preload="metadata">
+        <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4" loading="lazy">
       </video>
       <div id="users">
         <h1>Users Table</h1>

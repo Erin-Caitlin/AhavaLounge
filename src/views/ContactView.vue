@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid" id="contact-page">
-    <video autoplay muted loop class="background-video">
-      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video4.mp4" type="video/mp4">
+    <video autoplay muted loop class="background-video" preload="metadata">
+      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video4.mp4" type="video/mp4" loading="lazy">
     </video>
     <div class="text-center text-white py-2">
       <h2>Contact Us</h2>
