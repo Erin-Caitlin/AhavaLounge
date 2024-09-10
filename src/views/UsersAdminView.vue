@@ -1,142 +1,77 @@
 <template>
-    <div class="container-fluid" id="admin-page">
-      <video autoplay muted loop class="background-video" preload="metadata">
-        <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4" loading="lazy">
-      </video>
-      <div id="users">
-        <h1>Users Table</h1>
-        <div class="admin-container">
-          <button id="adminSortUser" class="btn btn-secondary">Sort</button>
-          <button id="adminAddUserBtn" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#adminAddUser">Add User</button>
-        </div>
-    
-        <div class="modal fade" id="adminAddUser" tabindex="-1" aria-labelledby="adminAddUserLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="adminAddUserLabel">Add User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="addUserForm" @submit.prevent="saveUser">
-                  <div class="mb-3">
-                    <label for="userFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="userFirstName" v-model="firstName" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="userLastName" v-model="lastName" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userAge" class="form-label">Age</label>
-                    <input type="number" class="form-control" id="userAge" v-model="age" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userGender" class="form-label">Gender</label>
-                    <input type="text" class="form-control" id="userGender" v-model="gender" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userEmail" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="userEmail" v-model="emailAddress" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="userPassword" v-model="pswd" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userProfile" class="form-label">Profile</label>
-                    <input type="text" class="form-control" id="userProfile" v-model="userProfile" required>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Save User</button>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
+  <div id="app">
+    <nav class="navbar">
+      <!-- Other Nav Items -->
+      <span class="navbar-brand" @click="openModal" id="title">
+        <i class="bi bi-person-fill"></i>
+      </span>
+    </nav>
+
+    <!-- Modal Component -->
+    <div v-if="isModalOpen" class="modal-overlay" @click="closeModal"></div>
+
+    <div v-if="isModalOpen" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" @click="closeModal">&times;</span>
+        <h2 class="display-2">Sign Up</h2>
+        <form @submit.prevent="register">
+          <div class="form-control-wrapper">
+            <input class="form-control" type="text" placeholder="First name" v-model="payload.firstName" required />
           </div>
-        </div>
-    
-        <!-- User Table -->
-        <table id="userTable" class="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Profile</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Age</th>
-              <th>Gender</th>
-              <th>Role</th>
-              <th>Email Address</th>
-            </tr>
-          </thead>
-          <tbody id="table-users">
-            <tr v-for="user in users" :key="user.userID">
-              <td>{{ user.userID }}</td>
-              <td><img v-bind:src="user.userProfile" alt="Profile Image" style="width: 50px; height: auto;"></td>
-              <td>{{ user.firstName }}</td>
-              <td>{{ user.lastName }}</td>
-              <td>{{ user.age }}</td>
-              <td>{{ user.gender }}</td>
-              <td>{{ user.userRole }}</td>
-              <td>{{ user.emailAddress }}</td>
-            </tr>
-          </tbody>
-        </table>
+          <div class="form-control-wrapper">
+            <input class="form-control" type="text" placeholder="Last name" v-model="payload.lastName" required />
+          </div>
+          <div class="form-control-wrapper">
+            <input class="form-control" type="text" placeholder="Age" v-model="payload.age" required />
+          </div>
+          <div class="form-control-wrapper">
+            <input class="form-control" type="text" placeholder="Gender" v-model="payload.gender" required />
+          </div>
+          <div class="form-control-wrapper">
+            <input class="form-control" type="email" placeholder="Email address" v-model="payload.emailAddress" required />
+          </div>
+          <div class="form-control-wrapper">
+            <input class="form-control" type="password" placeholder="Password" v-model="payload.pswd" required />
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn send-btn">Send</button>
+            <button type="reset" class="btn clear-btn">Clear</button>
+          </div>
+        </form>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import { mapState, mapActions } from 'vuex';
-  
-  export default {
-    data() {
-      return {
-        userProfile: '',
-        firstName: '',
-        lastName: '',
-        age: '',
-        gender: '',
-        emailAddress: '',
-        userRole: '',
-        pswd: ''
-      };
-    },
-    computed: {
-      ...mapState(['users'])
-    },
-    methods: {
-      ...mapActions(['register', 'fetchUsers']),
-      
-      async saveUser() {
-        console.log('Saving user...');
-        const payload = {
-            userProfile: this.userProfile,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            age: +this.age,
-            gender: this.gender,
-            emailAddress: this.emailAddress,
-            userRole: this.userRole,
-            pswd: this.pswd,
-        };
-  
-        try {
-          await this.register(payload); 
-          console.log('User registered successfully.');
-          await this.fetchUsers();
-        } catch (error) {
-          console.error('Error saving user:', error);
-        }
-      }
-    },
-    async mounted() {
-      await this.fetchUsers(); 
-    }
-  };
-  </script>
+  </div>
+</template>
+
+<script setup>
+import { reactive, ref } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const isModalOpen = ref(false);
+
+const payload = reactive({
+  firstName: '',
+  lastName: '',
+  age: '',
+  gender: '',
+  emailAddress: '',
+  pswd: ''
+});
+
+function openModal() {
+  isModalOpen.value = true;
+}
+
+function closeModal() {
+  isModalOpen.value = false;
+}
+
+function register() {
+  store.dispatch('register', payload);
+  closeModal();
+}
+</script>
   
  <style scoped>
 #admin-page {
