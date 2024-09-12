@@ -8,7 +8,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-8 mb-4 p-4 rounded shadow contact" data-aos="fade-up">
-          <h4 class="text-center mb-4 text-white">Message Us</h4>
+          <!-- <h4 class="text-center mb-4 text-white">Message Us</h4> -->
           <form action="https://formspree.io/f/myzgnzra" method="POST">
             <div class="form-group mb-3">
               <div class="row">

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-const api = 'http://localhost:3000/';
+const api = 'https://ahavalounge-2.onrender.com/';
 
 export default createStore({
   state: {
@@ -23,32 +23,15 @@ export default createStore({
       state.users = users;
     },
     setMovies(state, movies) {
-      if (Array.isArray(movies)) {
-        state.movies = movies;
-      } else {
-        console.error('Expected movies to be an array but received:', movies);
-      }
+      state.movies = movies;
     }
   }
   ,
   actions: {
-    // async addUser({ commit }, user_id) {
-    //   try {
-    //     const { results } = await axios.post(`${api}user/insert`, { id: user_id });
-    //     console.log(results);
-    //     commit('addUserToState', results);
-    //   } catch (err) {
-    //     console.error(err);
-    //     toast.error('Failed to add user', {
-    //       autoClose: 2000,
-    //       position: toast.POSITION.BOTTOM_CENTER
-    //     });
-    //   }
-    // },
     async fetchUser({ commit }, id) {
       try {
-        const { results } = await axios.get(`${api}user/${id}`);
-        commit('setUser', results);
+        const { data } = await axios.get(`${api}user/${id}`);
+        commit('setUser', data.results);
       } catch (err) {
         console.error(err);
         toast.error('Failed to fetch user', {
@@ -59,8 +42,8 @@ export default createStore({
     },
     async fetchUsers({ commit }) { 
       try {
-        const { results } = await axios.get(`${api}user`); 
-        commit('setUsers', results);
+        const { data } = await axios.get(`${api}user`);
+        commit('setUsers', data.results);
       } catch (err) {
         console.error(err);
         toast.error('Failed to fetch users', {
@@ -69,24 +52,24 @@ export default createStore({
         });
       }
     },
-    async register({ dispatch }, payload) {
+    async  register({ dispatch }, payload) {
       try {
-        const { results } = await axios.post(`${api}user/insert`, payload);
-        const { msg, err, token } = results;
+        const { data } = await axios.post(`${api}user/insert`, payload);
+        const { msg, err, token } = data.results;
         if (token) {
           dispatch('fetchUsers');
-          toast.success(`${msg}`, {
+          toast.success(msg, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
           });
         } else {
-          toast.error(`${err}`, {
+          toast.error(err, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
           });
         }
       } catch (e) {
-        toast.error(`${e.message}`, {
+        toast.error(e.message, {
           autoClose: 2000,
           position: toast.POSITION.BOTTOM_CENTER
         });

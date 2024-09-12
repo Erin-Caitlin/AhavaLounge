@@ -15,9 +15,9 @@
         <div class="form-group">
           <input class="form-control" type="password" placeholder="Password" v-model="payload.pswd" required />
         </div>
-        <h6 class="sign-up-link">Don't have an account? <router-link class="navbar-brand" to="/user-register" id="title"><span> Sign up here</span></router-link></h6>
+        <p class="lead">Don't have an account? <router-link to="/user-register" class="sign-up-link">Sign up here</router-link></p>
         <div class="form-actions">
-          <button type="submit" @click.prevent="login" class="btn send-btn">Send</button>
+          <button type="submit" class="btn send-btn">Send</button>
           <button type="reset" class="btn clear-btn">Clear</button>
         </div>
       </form>
@@ -56,34 +56,43 @@ function login() {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 0 20px; /* Add padding for responsiveness */
+  padding: 0 20px;
 }
 
 .form-content {
-  background: rgba(255, 255, 255, 0.8); /* Slightly opaque background */
+  background-color: rgba(255, 255, 255, 0.9); /* Match with UserRegister.vue */
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Match with UserRegister.vue */
   width: 100%;
-  max-width: 400px;
+  max-width: 500px; /* Match with UserRegister.vue */
+  max-height: 80vh; /* Match with UserRegister.vue */
+  overflow-y: auto; /* Match with UserRegister.vue */
 }
 
 h2 {
   font-family: 'Georgia', serif;
-  font-size: 28px;
+  font-size: 30px; /* Match with UserRegister.vue */
   text-align: center;
   color: #532823;
   margin-bottom: 1.5rem;
 }
 
+.lead {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem; /* Match with UserRegister.vue */
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
+  padding: 14px; /* Match with UserRegister.vue */
+  border: 1px solid #ddd;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.95);
   font-family: 'Arial', sans-serif;
@@ -91,21 +100,17 @@ input {
 }
 
 input::placeholder {
-  color: #666;
+  color: #999;
 }
 
 .sign-up-link {
   text-align: center;
-  margin-top: 1rem;
-  font-size: 14px;
-}
-
-.sign-up-link a {
   color: #532823;
   text-decoration: none;
+  font-weight: bold;
 }
 
-.sign-up-link a:hover {
+.sign-up-link:hover {
   text-decoration: underline;
 }
 
