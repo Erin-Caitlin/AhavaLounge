@@ -18,7 +18,7 @@
             </optgroup>
             <optgroup label="Age Restriction">
               <option value="all">All Ages</option>
-              <option v-for="age in ageRestrictions" :key="age" :value="'age-' + age">{{ age }}+</option>
+              <option v-for="age in ageRestrictions" :key="age" :value="'age-' + age">{{ age }}</option>
             </optgroup>
             <optgroup label="Sort By">
               <option value="priceAsc">Price: Low to High</option>
@@ -28,9 +28,11 @@
           </select>
         </div>
       </div>
-
-      <div class="row gap-lg-5 justify-content-center" id="products">
-        <CardComp v-for="movie in filteredMovies" :key="movie.movieID" class="text-light">
+      <div v-if="loading">
+        <Spinner />
+      </div>
+      <div class="row gap-lg-5 justify-content-center" id="movies" v-else-if="movies.length">
+        <Card v-for="movie in filteredMovies" :key="movie.movieID" class="text-light">
           <template v-slot:cardHeader>
             <div class="carousel-img-container">
               <img :src="movie.mImage" class="carousel-img" :alt="movie.mName" loading="lazy">
@@ -38,9 +40,7 @@
               <div class="overlay">
                 <div class="movie-info">
                   <button class="view-movie">
-                    <router-link :to="`/movies/${movie.movieID}`" class="link-no-decoration">
-                      View movie
-                    </router-link>
+                    <router-link :to="`/single-movie/${movie.movieID}`" class="link-no-decoration">View movie</router-link>
                   </button>
                 </div>
               </div>
@@ -50,25 +50,30 @@
             <h5 class="movie-name">{{ movie.mName }}</h5>
             <p class="movie-category">{{ movie.mCategory }}</p>
           </template>
-        </CardComp>
+        </Card>
+      </div>
+      <div v-else>
+        <p class="text-light">No movies found</p>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-import CardComp from '@/components/Card.vue';
+import Spinner from '@/components/Spinner.vue';
+import Card from '@/components/Card.vue';
 import store from '@/store';
 
 export default {
   components: {
-    CardComp,
+    Card,
+    Spinner
   },
   data() {
     return {
       selectedFilter: '',
       searchQuery: '',
+      loading: true 
     };
   },
   computed: {
@@ -114,8 +119,12 @@ export default {
       }
     },
   },
-  mounted() {
-    store.dispatch('fetchMovies');
+  async mounted() {
+    try {
+      await store.dispatch('fetchMovies');
+    } finally {
+      this.loading = false;
+    }
   }
 }
 </script>

@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('../views/HomeView.vue')
   },
   {
     path: '/about',
@@ -18,9 +17,9 @@ const routes = [
     component: () => import('../views/BookNowView.vue')
   },
   {
-    path: '/single-meal',
-    name: 'single-meal',
-    component: () => import('../views/SingleMealView.vue')
+    path: '/single-movie/:id',
+    name: 'single-movie',
+    component: () => import('../views/SingleMovieView.vue')
   },
   {
     path: '/useradmin',
