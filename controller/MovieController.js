@@ -8,7 +8,7 @@ moviesRouter.use(bodyParser.json());
 
 const movies = new Movies();
 
-moviesRouter.get('/', verifyAToken, (req, res) => {
+moviesRouter.get('/', (req, res) => {
     movies.fetchMovies(req, res);
 });
 
