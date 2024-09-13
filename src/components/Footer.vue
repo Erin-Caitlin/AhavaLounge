@@ -2,8 +2,8 @@
   <div class="footer">
     <div class="container-fluid p-3 text-center">
       <hr/>
-      <router-link to="" target="_blank"><i class="bi bi-github icon"></i></router-link>
-      <router-link to="#" target="_blank"><i class="bi bi-linkedin icon"></i></router-link>
+      <a href="https://github.com/Erin-Caitlin/AhavaLounge.git" target="_blank"><i class="bi bi-github icon"></i></a>
+      <a href="www.linkedin.com/in/erin-caitlin-williams-25356a320" target="_blank"><i class="bi bi-linkedin icon"></i></a>
       <p>Ahava Lounge &copy; {{ cYear }}</p>
     </div>
   </div>

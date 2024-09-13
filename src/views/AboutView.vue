@@ -1,6 +1,6 @@
 <template>
     <div class="full-page-background">
-      <video autoplay muted loop class="background-video">
+      <video autoplay muted loop preload="auto" class="background-video">
       <source src="https://erin-caitlin.github.io/AhavaImages/videos/video13.mp4" type="video/mp4" loading="lazy">
     </video>
       <div class="content-overlay">
