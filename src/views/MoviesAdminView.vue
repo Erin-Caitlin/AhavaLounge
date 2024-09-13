@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid" id="admin-page">
-    <video autoplay muted loop class="background-video" preload="metadata">
-      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4" loading="lazy">
+    <video autoplay muted loop preload="auto" class="background-video">
+      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video1.mp4" type="video/mp4">
     </video>
     <div id="movies">
       <h1>Movies Table</h1>
@@ -58,7 +58,6 @@
       <div v-if="loading">
         <Spinner />
       </div>
-      <!-- Movies Table -->
       <table v-else id="movieTable" class="table table-striped">
         <thead>
           <tr>
@@ -80,7 +79,7 @@
             <td>{{ movie.mDescription }}</td>
             <td>{{ movie.mCategory }}</td>
             <td>{{ movie.mDuration }}</td>
-            <td>{{ movie.ticketPrice }}</td>
+            <td>R{{ movie.ticketPrice }}</td>
             <td>{{ movie.releaseDate }}</td>
           </tr>
         </tbody>
@@ -222,26 +221,47 @@ export default {
 }
 
 .table {
-  background-color: #532823;
-  color: #fff;
-  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9); 
+  color: #532823; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  border-radius: 10px;
+  margin: 1rem auto;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #6b3a30;
+.table thead {
+  background-color: #532823;
+  color: white;
 }
 
 .table th, .table td {
-  border: 1px solid #532823;
+  padding: 1rem;
 }
 
-.table th {
-  background-color: #6b3a30;
-  color: #fff;
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #b37f55f8;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(95, 31, 31, 0.8);
 }
 
 .table td img {
+  width: 50px;
+  height: auto;
   border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.table td img:hover {
+  transform: scale(1.1);
+}
+
+.table th {
+  background-color: #532823;
+  color: white;
 }
 
 .table td {

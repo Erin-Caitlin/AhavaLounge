@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <video autoplay muted loop class="background-video">
+    <video autoplay muted loop preload="auto" class="background-video">
       <source src="https://erin-caitlin.github.io/AhavaImages/videos/video13.mp4" type="video/mp4" loading="lazy">
     </video>
   </div>
@@ -17,8 +17,8 @@
         </div>
         <p class="lead">Don't have an account? <router-link to="/user-register" class="sign-up-link">Sign up here</router-link></p>
         <div class="form-actions">
-          <button type="submit" class="btn send-btn">Send</button>
-          <button type="reset" class="btn clear-btn">Clear</button>
+          <button type="submit" class="btn send-btn">Login</button>
+          <button type="button" @click="clearForm" class="btn clear-btn">Clear</button>
         </div>
       </form>
     </div>
@@ -26,17 +26,25 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import { useStore } from 'vuex';
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 
-const store = useStore();
-const payload = reactive({
+const store = useStore()
+
+const payload = ref({
   emailAddress: '',
   pswd: ''
-});
+})
 
 function login() {
-  store.dispatch('login', payload);
+  // Dispatch login action with payload
+  store.dispatch('login', payload.value)
+}
+
+function clearForm() {
+  // Reset the form fields
+  payload.value.emailAddress = ''
+  payload.value.pswd = ''
 }
 </script>
 
@@ -60,19 +68,19 @@ function login() {
 }
 
 .form-content {
-  background-color: rgba(255, 255, 255, 0.9); /* Match with UserRegister.vue */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Match with UserRegister.vue */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 500px; /* Match with UserRegister.vue */
-  max-height: 80vh; /* Match with UserRegister.vue */
-  overflow-y: auto; /* Match with UserRegister.vue */
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 h2 {
   font-family: 'Georgia', serif;
-  font-size: 30px; /* Match with UserRegister.vue */
+  font-size: 30px;
   text-align: center;
   color: #532823;
   margin-bottom: 1.5rem;
@@ -86,12 +94,12 @@ h2 {
 }
 
 .form-group {
-  margin-bottom: 1.5rem; /* Match with UserRegister.vue */
+  margin-bottom: 1.5rem;
 }
 
 input {
   width: 100%;
-  padding: 14px; /* Match with UserRegister.vue */
+  padding: 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.95);

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <video autoplay muted loop class="background-video">
-      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video13.mp4" type="video/mp4" loading="lazy">
+    <video autoplay muted loop preload="auto" class="background-video">
+      <source src="https://erin-caitlin.github.io/AhavaImages/videos/video13.mp4" type="video/mp4">
     </video>
   </div>
   <div class="form-container">
@@ -10,54 +10,135 @@
       <p class="lead">Create a new account</p>
       <form @submit.prevent="register">
         <div class="form-group">
-          <input class="form-control" type="text" placeholder="First name" v-model="payload.firstName" required />
+          <input class="form-control" type="text" placeholder="First name" v-model="payload.firstName" @blur="validateFirstName" required />
+          <span class="error-text">{{ errors.firstName }}</span>
         </div>
         <div class="form-group">
-          <input class="form-control" type="text" placeholder="Last name" v-model="payload.lastName" required />
+          <input class="form-control" type="text" placeholder="Last name" v-model="payload.lastName" @blur="validateLastName" required />
+          <span class="error-text">{{ errors.lastName }}</span>
         </div>
         <div class="form-group">
-          <input class="form-control" type="number" placeholder="Age" v-model="payload.age" required />
+          <input class="form-control" type="number" placeholder="Age (2 digits)" v-model="payload.age" @blur="validateAge" min="10" max="99" required />
+          <span class="error-text">{{ errors.age }}</span>
         </div>
         <div class="form-group">
-          <input class="form-control" type="text" placeholder="Gender" v-model="payload.gender" required />
+          <select class="form-control" v-model="payload.gender" @blur="validateGender" required>
+            <option value="" disabled>Select Gender</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+          <span class="error-text">{{ errors.gender }}</span>
         </div>
         <div class="form-group">
-          <input class="form-control" type="email" placeholder="Email address" v-model="payload.emailAddress" required />
+          <input class="form-control" type="email" placeholder="Email address" v-model="payload.emailAddress" @blur="validateEmail" required />
+          <span class="error-text">{{ errors.emailAddress }}</span>
         </div>
         <div class="form-group">
-          <input class="form-control" type="password" placeholder="Password" v-model="payload.pswd" required />
+          <input class="form-control" type="password" placeholder="Password" v-model="payload.pswd" @blur="validatePassword" required />
+          <span class="error-text">{{ errors.pswd }}</span>
         </div>
         <div class="form-group">
           <input class="form-control" type="url" placeholder="Profile link" v-model="payload.userProfile" />
         </div>
+        <div class="form-group">
+          <select class="form-control" v-model="payload.role" @blur="validateRole" required>
+            <option value="" disabled>Select Role</option>
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+          </select>
+          <span class="error-text">{{ errors.role }}</span>
+        </div>
         <p class="lead">Already have an account? <router-link to="/user-login" class="login-link">Login here</router-link></p>
         <div class="form-actions">
           <button type="submit" class="btn send-btn">Sign Up</button>
-          <button type="reset" class="btn clear-btn">Clear</button>
+          <button type="button" class="btn clear-btn" @click="clearForm">Clear</button>
         </div>
       </form>
     </div>
   </div>
 </template>
 
-
 <script setup>
 import { reactive } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
-const payload = reactive({
+
+const initialPayload = {
   firstName: '',
   lastName: '',
   age: '',
   gender: '',
   emailAddress: '',
   pswd: '',
-  userProfile: 'https://erin-caitlin.github.io/AhavaImages/images/user-profile.png'
+  userProfile: 'https://erin-caitlin.github.io/AhavaImages/images/user-profile.png',
+  role: 'User' // Default role
+};
+
+const payload = reactive({ ...initialPayload });
+const errors = reactive({
+  firstName: '',
+  lastName: '',
+  age: '',
+  gender: '',
+  emailAddress: '',
+  pswd: '',
+  role: ''
 });
 
+function validateFirstName() {
+  errors.firstName = payload.firstName ? '' : 'First name is required';
+}
+
+function validateLastName() {
+  errors.lastName = payload.lastName ? '' : 'Last name is required';
+}
+
+function validateAge() {
+  const age = parseInt(payload.age, 10);
+  errors.age = (age >= 10 && age <= 99) ? '' : 'Age must be a two-digit number between 10 and 99';
+}
+
+function validateGender() {
+  errors.gender = payload.gender ? '' : 'Gender is required';
+}
+
+function validateEmail() {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  errors.emailAddress = emailRegex.test(payload.emailAddress) ? '' : 'Invalid email address';
+}
+
+function validatePassword() {
+  errors.pswd = payload.pswd.length >= 6 ? '' : 'Password must be at least 6 characters long';
+}
+
+function validateRole() {
+  errors.role = payload.role ? '' : 'Role is required';
+}
+
 function register() {
-  store.dispatch('register', payload);
+  validateFirstName();
+  validateLastName();
+  validateAge();
+  validateGender();
+  validateEmail();
+  validatePassword();
+  validateRole();
+
+  if (Object.values(errors).every(error => error === '')) {
+    store.dispatch('register', payload);
+  }
+}
+
+function clearForm() {
+  // Reset all fields except userProfile and role
+  payload.firstName = '';
+  payload.lastName = '';
+  payload.age = '';
+  payload.gender = '';
+  payload.emailAddress = '';
+  payload.pswd = '';
+  payload.role = 'User'; // Reset to default role
 }
 </script>
 
@@ -117,7 +198,7 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 14px;
   border: 1px solid #ddd;
@@ -129,6 +210,16 @@ input {
 
 input::placeholder {
   color: #999;
+}
+
+select {
+  font-size: 16px;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 0.5rem;
 }
 
 .login-link {
@@ -175,5 +266,3 @@ input::placeholder {
   background-color: #e6e6e6;
 }
 </style>
-
-
