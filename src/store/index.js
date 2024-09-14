@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-const api = 'https://ahavalounge-2.onrender.com/';
+const api = 'http://localhost:3000/';
 
 export default createStore({
   state: {
@@ -49,16 +49,19 @@ export default createStore({
       try {
         commit('setLoading', true);
         const { data } = await axios.post(`${api}user/login`, payload);
-        const { token, user, err } = data.results;
-        if (token) {
+        const { results } = data || {};
+        if (results && results.token) {
+          const { token, user } = results;
           commit('setToken', token);
           commit('setUser', user);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           toast.success('Login successful', {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
           });
         } else {
-          toast.error(err, {
+          const errorMsg = results?.err || 'Login failed. No token returned.';
+          toast.error(errorMsg, {
             autoClose: 2000,
             position: toast.POSITION.BOTTOM_CENTER
           });

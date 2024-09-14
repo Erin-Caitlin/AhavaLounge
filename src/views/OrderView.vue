@@ -10,10 +10,10 @@
         <thead>
           <tr>
             <th>Image</th>
-            <th>Title</th>
+            <th>Movie</th>
             <th>Category</th>
-            <th>Amount</th>
-            <th>Quantity</th>
+            <th>Price</th>
+            <th>Seats</th>
             <th>Subtotal</th>
             <th>Remove</th>
           </tr>
@@ -23,58 +23,75 @@
             <td><img :src="movie.mImage" :alt="movie.mName" class="profile-img" loading="lazy"></td>
             <td>{{ movie.mName }}</td>
             <td>{{ movie.mCategory }}</td>
-            <td>R {{ movie.ticketPrice.toFixed(2) }}</td>
-            <td><input type="number" v-model.number="movie.quantity" @change="updateSubtotal(index)" min="1"></td>
-            <td>R {{ movie.subtotal.toFixed(2) }}</td>
+            <td>R {{ (movie.ticketPrice || 0).toFixed(2) }}</td>
+            <td>{{ movie.seats }}</td>
+            <td>R {{ (movie.subtotal || 0).toFixed(2) }}</td>
             <td><button class="btn btn-danger" @click="removeMovie(index)">Remove</button></td>
           </tr>
         </tbody>
       </table>
-      <router-link to="/booking"><button type="button" class="btn btn-secondary">Shop More</button></router-link>
+      <router-link to="/booking"><button type="button" class="btn btn-secondary">Book another movie</button></router-link>
       <button type="button" class="btn btn-primary" @click="purchaseTicket">Purchase Ticket</button>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive, watch, onMounted } from 'vue';
+
 export default {
-  data() {
-    return {
-      bookingDisplay: JSON.parse(localStorage.getItem('booking')) || []
+  setup() {
+    const bookingDisplay = reactive(JSON.parse(localStorage.getItem('booking')) || []);
+
+    const saveToLocalStorage = () => {
+      localStorage.setItem('booking', JSON.stringify(bookingDisplay));
+      console.log('Updated localStorage:', localStorage.getItem('booking'));
     };
-  },
-  methods: {
-    updateSubtotal(index) {
-      const movie = this.bookingDisplay[index];
-      movie.subtotal = movie.ticketPrice * movie.quantity;
-      this.$forceUpdate();
-    },
-    removeMovie(index) {
-      this.bookingDisplay.splice(index, 1);
-      localStorage.setItem('booking', JSON.stringify(this.bookingDisplay));
-    },
-    purchaseTicket() {
-      this.bookingDisplay = [];
+
+    const updateSubtotal = (index) => {
+      const movie = bookingDisplay[index];
+      if (movie && movie.ticketPrice && movie.seats) {
+        movie.subtotal = movie.ticketPrice * movie.seats;
+      } else {
+        movie.subtotal = 0;
+      }
+      console.log('Updated subtotal for movie:', movie);
+    };
+
+    const removeMovie = (index) => {
+      bookingDisplay.splice(index, 1);
+      saveToLocalStorage();
+    };
+
+    const purchaseTicket = () => {
+      bookingDisplay.length = 0; // Clear array
       localStorage.removeItem('booking');
       alert('Your booking has been successful!');
-    }
-  },
-  watch: {
-    bookingDisplay: {
-      handler(newVal) {
-        localStorage.setItem('booking', JSON.stringify(newVal));
-      },
-      deep: true
-    }
-  },
-  mounted() {
-    this.bookingDisplay.forEach(movie => {
-      if (!movie.quantity) {
-        this.$set(movie, 'quantity', 1);
-      }
-      this.updateSubtotal(this.bookingDisplay.indexOf(movie));
+      console.log('Booking cleared');
+    };
+
+    watch(
+      () => bookingDisplay,
+      () => saveToLocalStorage(),
+      { deep: true }
+    );
+
+    onMounted(() => {
+      bookingDisplay.forEach((movie, index) => {
+        if (movie.seats === undefined) {
+          movie.seats = 1;
+        }
+        updateSubtotal(index);
+      });
     });
-  }
+
+    return {
+      bookingDisplay,
+      updateSubtotal,
+      removeMovie,
+      purchaseTicket,
+    };
+  },
 };
 </script>
 

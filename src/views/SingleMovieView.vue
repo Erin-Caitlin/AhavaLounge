@@ -31,9 +31,7 @@
           <p class="movie-info">
             <span class="info-label">Year:</span> {{ movie.releaseDate }}
           </p>
-          <router-link to="/order-list">
-            <button class="btn-book">Book Now</button>
-          </router-link>
+          <button class="btn-book" @click="addToBookingList">Book Now</button>
         </div>
       </div>
     </div>
@@ -55,6 +53,23 @@ export default {
     },
     loading() {
       return this.$store.state.loading;
+    }
+  },
+  methods: {
+    addToBookingList() {
+      const movieToAdd = { ...this.movie, seats: 1 }; // Initialize with 1 seat
+      let bookingList = JSON.parse(localStorage.getItem('booking')) || [];
+      
+      // Check if the movie already exists in the booking list
+      const existingIndex = bookingList.findIndex(m => m.id === movieToAdd.id);
+      if (existingIndex > -1) {
+        bookingList[existingIndex].seats += 1;
+      } else {
+        bookingList.push(movieToAdd);
+      }
+      
+      localStorage.setItem('booking', JSON.stringify(bookingList));
+      this.$router.push('/order-list'); // Redirect to the order-list page
     }
   },
   mounted() {
