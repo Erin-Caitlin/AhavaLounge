@@ -72,7 +72,7 @@ const initialPayload = {
   emailAddress: '',
   pswd: '',
   userProfile: 'https://erin-caitlin.github.io/AhavaImages/images/user-profile.png',
-  role: 'User' // Default role
+  role: 'User' 
 };
 
 const payload = reactive({ ...initialPayload });
@@ -131,14 +131,13 @@ function register() {
 }
 
 function clearForm() {
-  // Reset all fields except userProfile and role
   payload.firstName = '';
   payload.lastName = '';
   payload.age = '';
   payload.gender = '';
   payload.emailAddress = '';
   payload.pswd = '';
-  payload.role = 'User'; // Reset to default role
+  payload.role = 'User'; 
 }
 </script>
 

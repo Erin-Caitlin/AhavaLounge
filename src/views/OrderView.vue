@@ -64,7 +64,7 @@ export default {
     };
 
     const purchaseTicket = () => {
-      bookingDisplay.length = 0; // Clear array
+      bookingDisplay.length = 0;
       localStorage.removeItem('booking');
       alert('Your booking has been successful!');
       console.log('Booking cleared');

@@ -51,7 +51,7 @@ const errors = reactive({
   pswd: ''
 });
 
-const passwordFieldType = ref('password'); // Track the type of the password field
+const passwordFieldType = ref('password'); 
 
 function validateEmail() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -165,7 +165,7 @@ input::placeholder {
   cursor: pointer;
   font-size: 14px;
   padding: 0;
-  z-index: 1; /* Ensure the button is above the input field */
+  z-index: 1; 
 }
 
 .show-password-btn:hover {

@@ -57,10 +57,8 @@ export default {
   },
   methods: {
     addToBookingList() {
-      const movieToAdd = { ...this.movie, seats: 1 }; // Initialize with 1 seat
+      const movieToAdd = { ...this.movie, seats: 1 };
       let bookingList = JSON.parse(localStorage.getItem('booking')) || [];
-      
-      // Check if the movie already exists in the booking list
       const existingIndex = bookingList.findIndex(m => m.id === movieToAdd.id);
       if (existingIndex > -1) {
         bookingList[existingIndex].seats += 1;
@@ -69,7 +67,7 @@ export default {
       }
       
       localStorage.setItem('booking', JSON.stringify(bookingList));
-      this.$router.push('/order-list'); // Redirect to the order-list page
+      this.$router.push('/order-list');
     }
   },
   mounted() {
