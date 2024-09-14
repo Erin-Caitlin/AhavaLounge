@@ -65,7 +65,7 @@ function handleScroll() {
 }
 
 function openLoginModal(event) {
-  event.preventDefault(); // Prevent the default router-link behavior
+  event.preventDefault(); 
   router.push('/user-login').then(() => {
     setTimeout(() => {
       // Access the component and trigger openModal
@@ -86,29 +86,25 @@ window.addEventListener('resize', handleResize);
 h1 {
   font-size: 24px;
 }
-.navbar-right {
-  margin-left: auto;
-}
 
 .navbar .dropdown-menu {
   background-color: #532823b4;
-  border: none; 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  border: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .navbar .dropdown-item {
   color: #fff;
-  padding: 10px 20px; 
-  font-size: 14px; 
+  padding: 10px 20px;
+  font-size: 14px;
 }
 
 .navbar .dropdown-item:hover {
-  background-color: #422020; 
-  color: #fff; 
+  background-color: #422020;
 }
 
 .navbar .dropdown-toggle::after {
-  display: none; 
+  display: none;
 }
 
 .navbar .nav-item.dropdown {
@@ -116,10 +112,47 @@ h1 {
 }
 
 .navbar .dropdown-menu {
-  position: absolute; 
-  top: 100%; 
+  position: absolute;
+  top: 100%;
   left: 0;
-  width: 100%; 
+  width: 100%;
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  padding-bottom: 5px;
+  color: #fff; 
+  text-decoration: none;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f8f9fa; 
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #f8f9fa; 
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.navbar-nav .nav-link.active {
+  color: #f8f9fa; 
+}
+
+.navbar-nav .nav-link.active::after {
+  transform: scaleX(1);
+  background-color: #f8f9fa; 
 }
 
 @media (max-width: 991.98px) {
@@ -137,4 +170,11 @@ h1 {
     left: 0;
   }
 }
+
+
+.navbar-toggler {
+  border: none;
+  background-color: white; 
+}
 </style>
+

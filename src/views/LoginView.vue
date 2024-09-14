@@ -37,7 +37,6 @@ const payload = ref({
 })
 
 function login() {
-  // Dispatch login action with payload
   store.dispatch('login', payload.value)
 }
 

@@ -18,34 +18,6 @@
             </div>
             <div class="modal-body">
               <form id="addMovieForm" @submit.prevent="saveMovie">
-                <div class="mb-3">
-                  <label for="MovieName" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="MovieName" v-model="mName" required>
-                </div>
-                <div class="mb-3">
-                  <label for="MovieDescription" class="form-label">Description</label>
-                  <input type="text" class="form-control" id="MovieDescription" v-model="mDescription" required>
-                </div>
-                <div class="mb-3">
-                  <label for="MovieCategory" class="form-label">Category</label>
-                  <input type="text" class="form-control" id="MovieCategory" v-model="mCategory" required>
-                </div>
-                <div class="mb-3">
-                  <label for="MovieDuration" class="form-label">Duration</label>
-                  <input type="text" class="form-control" id="MovieDuration" v-model="mDuration" required>
-                </div>
-                <div class="mb-3">
-                  <label for="MovieTicketPrice" class="form-label">Ticket Price</label>
-                  <input type="number" class="form-control" id="MovieTicketPrice" v-model="ticketPrice" required>
-                </div>
-                <div class="mb-3">
-                  <label for="MovieReleaseDate" class="form-label">Film Year</label>
-                  <input type="text" class="form-control" id="MovieReleaseDate" v-model="releaseDate" required>
-                </div>
-                <div class="mb-3">
-                  <label for="mImage" class="form-label">Movie Cover</label>
-                  <input type="text" class="form-control" id="mImage" v-model="mImage" required>
-                </div>
                 <button type="submit" class="btn btn-primary">Save Movie</button>
               </form>
             </div>
@@ -68,7 +40,8 @@
             <th>Category</th>
             <th>Duration</th>
             <th>Ticket Price</th>
-            <th>Film year</th>
+            <th>Film Year</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="table-movies">
@@ -76,11 +49,22 @@
             <td>{{ movie.movieID }}</td>
             <td><img :src="movie.mImage" alt="Movie Cover" style="width: 50px; height: auto;"></td>
             <td>{{ movie.mName }}</td>
-            <td>{{ movie.mDescription }}</td>
+            <td>
+              <div>
+                <p :class="{ 'show-more': expandedMovies.includes(movie.movieID) }">{{ movie.mDescription }}</p>
+                <button @click="toggleDescription(movie.movieID)">
+                  {{ expandedMovies.includes(movie.movieID) ? 'Read Less' : 'Read More' }}
+                </button>
+              </div>
+            </td>
             <td>{{ movie.mCategory }}</td>
             <td>{{ movie.mDuration }}</td>
             <td>R{{ movie.ticketPrice }}</td>
             <td>{{ movie.releaseDate }}</td>
+            <td>
+              <button @click="editMovie(movie.movieID)" class="btn btn-primary btn-sm">Edit</button>
+              <button @click="deleteMovie(movie.movieID)" class="btn btn-danger btn-sm">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -104,19 +88,18 @@ export default {
       mCategory: '',
       mDuration: '',
       ticketPrice: '',
-      ageRestriction: '', 
       releaseDate: '',
-      loading: true 
+      loading: true,
+      expandedMovies: [],
     };
   },
   computed: {
     ...mapState(['movies'])
   },
   methods: {
-    ...mapActions(['addMovie', 'fetchMovies']),
+    ...mapActions(['addMovie', 'fetchMovies', 'editMovie', 'deleteMovie']),
     
     async saveMovie() {
-      console.log('Saving movie...');
       const payload = {
         mImage: this.mImage,
         mName: this.mName,
@@ -124,24 +107,44 @@ export default {
         mCategory: this.mCategory,
         mDuration: this.mDuration,
         ticketPrice: this.ticketPrice,
-        ageRestriction: this.ageRestriction,
         releaseDate: this.releaseDate
       };
 
       try {
-        await this.addMovie(payload); 
+        await this.addMovie(payload);
         alert('Movie added successfully.');
         await this.fetchMovies();
       } catch (error) {
         alert('Error saving movie:', error);
       }
+    },
+
+    toggleDescription(movieID) {
+      if (this.expandedMovies.includes(movieID)) {
+        this.expandedMovies = this.expandedMovies.filter(id => id !== movieID);
+      } else {
+        this.expandedMovies.push(movieID);
+      }
+    },
+
+    deleteMovie(movieID) {
+      if (confirm('Are you sure you want to delete this movie?')) {
+        this.$store.dispatch('deleteMovie', movieID)
+          .then(() => {
+            alert('Movie deleted successfully.');
+            this.fetchMovies();
+          })
+          .catch(error => {
+            alert('Error deleting movie:', error);
+          });
+      }
     }
   },
   async mounted() {
     try {
-      await this.fetchMovies(); 
+      await this.fetchMovies();
     } finally {
-      this.loading = false; 
+      this.loading = false;
     }
   }
 };
@@ -152,6 +155,7 @@ export default {
   padding: 0 1.5rem;
   text-align: center;
   color: #fff;
+  font-family: 'Roboto', sans-serif;
 }
 
 .background-video {
@@ -221,50 +225,102 @@ export default {
 }
 
 .table {
-  background-color: rgba(255, 255, 255, 0.9); 
-  color: #532823; 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #532823;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin: 1rem auto;
   overflow: hidden;
   width: 100%;
   max-width: 1200px;
+  font-family: 'Roboto', sans-serif;
 }
 
-.table thead {
+#movieTable thead {
   background-color: #532823;
   color: white;
 }
 
-.table th, .table td {
+#movieTable th {
   padding: 1rem;
+  background-color: #532823;
+  color: white;
 }
 
-.table-striped tbody tr:nth-of-type(even) {
+#movieTable tbody tr:nth-child(even) {
   background-color: #b37f55f8;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(95, 31, 31, 0.8);
+#movieTable tbody tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.table img {
+  transition: transform 0.2s;
+}
+
+.table img:hover {
+  transform: scale(1.1);
 }
 
 .table td img {
   width: 50px;
   height: auto;
   border-radius: 50%;
-  transition: transform 0.2s;
 }
 
-.table td img:hover {
-  transform: scale(1.1);
+.table td div {
+  position: relative;
 }
 
-.table th {
+.table td p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.table td p.show-more {
+  white-space: normal;
+  overflow: visible;
+}
+
+.table td button {
+  margin-top: 0.5rem;
   background-color: #532823;
-  color: white;
+  border-radius: .2rem;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
 }
 
-.table td {
-  vertical-align: middle;
+.table td button:hover {
+  background-color: #6b3a30;
+}
+
+.table td button:focus {
+  outline: none;
+}
+
+.table td button.btn-sm {
+  padding: 0.3rem 0.6rem;
+}
+
+.table td button.btn-primary {
+  background-color: #007bff;
+}
+
+.table td button.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.table td button.btn-danger {
+  background-color: #dc3545;
+}
+
+.table td button.btn-danger:hover {
+  background-color: #c82333;
 }
 </style>

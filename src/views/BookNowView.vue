@@ -79,7 +79,7 @@ export default {
   computed: {
     ...mapState({
       movies: state => state.movies || [],
-      loading: state => state.loading || false // Ensure loading is correctly accessed
+      loading: state => state.loading || false 
     }),
     categories() {
       const categoriesSet = new Set(this.movies.map(movie => movie.mCategory));
@@ -134,7 +134,7 @@ export default {
         position: 'bottom-center'
       });
     } finally {
-      this.loading = this.$store.state.loading; // Ensure the loading state is set from Vuex
+      this.loading = this.$store.state.loading;
     }
   },
   methods: {
