@@ -18,42 +18,73 @@
             </div>
             <div class="modal-body">
               <form id="addUserForm" @submit.prevent="saveUser">
-                <input type="hidden" v-model="userID">
                 <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" v-model="user.username" required>
+                  <label for="userFirstName" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="userFirstName" v-model="firstName" required>
                 </div>
                 <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" v-model="user.password" required>
+                  <label for="userLastName" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="userLastName" v-model="lastName" required>
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email" v-model="user.email" required>
+                  <label for="userAge" class="form-label">Age</label>
+                  <input type="number" class="form-control" id="userAge" v-model.number="age" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <div class="mb-3">
+                  <label for="userGender" class="form-label">Gender</label>
+                  <input type="text" class="form-control" id="userGender" v-model="gender" required>
+                </div>
+                <div class="mb-3">
+                  <label for="userEmail" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="userEmail" v-model="emailAddress" required>
+                </div>
+                <div class="mb-3">
+                  <label for="userPassword" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="userPassword" v-model="pswd" required>
+                </div>
+                <div class="mb-3">
+                  <label for="userProfile" class="form-label">Profile</label>
+                  <input type="text" class="form-control" id="userProfile" v-model="userProfile" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save User</button>
               </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
       </div>
-      <table class="table table-striped">
+      <div v-if="loading">
+        <Spinner />
+      </div>
+      <table v-else id="userTable" class="table table-striped">
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Email</th>
-            <th>Actions</th>
+            <th>ID</th>
+            <th>Profile</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th>Email Address</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.username }}</td>
-            <td>{{ user.password }}</td>
-            <td>{{ user.email }}</td>
+        <tbody id="table-users">
+          <tr v-for="user in users" :key="user.userID">
+            <td>{{ user.userID }}</td>
+            <td><img :src="user.userProfile" alt="Profile Image" class="profile-img" loading="lazy"></td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.userRole }}</td>
+            <td>{{ user.emailAddress }}</td>
             <td>
-              <button @click="editUser(user)" class="btn btn-warning btn-sm">Edit</button>
-              <button @click="deleteUser(user.id)" class="btn btn-danger btn-sm">Delete</button>
+              <button class="btn btn-primary btn-sm" @click="editUser(user)"><i class="bi bi-pen"></i></button>
+              <button class="btn btn-danger btn-sm" @click="deleteUser(user.userID)"><i class="bi bi-trash3"></i></button>
             </td>
           </tr>
         </tbody>
@@ -64,65 +95,118 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Spinner from '@/components/Spinner.vue'; 
 
 export default {
+  components: {
+    Spinner 
+  },
   data() {
     return {
-      user: {
-        username: '',
-        password: '',
-        email: ''
-      },
-      userID: null
+      userProfile: 'https://erin-caitlin.github.io/AhavaImages/images/user-profile.png',
+      firstName: '',
+      lastName: '',
+      age: '',
+      gender: '',
+      emailAddress: '',
+      userRole: '',
+      pswd: '',
+      loading: true,
+      selectedUser: null
     };
   },
   computed: {
     ...mapState(['users'])
   },
   methods: {
-    ...mapActions(['fetchUsers', 'register', 'updateUser', 'deleteUser']),
+    ...mapActions(['register', 'fetchUsers', 'updateUser', 'deleteUserById']),
+
     async saveUser() {
-      if (this.userID) {
-        await this.updateUser({
-          userID: this.userID,
-          ...this.user
-        });
+      if (this.selectedUser) {
+        const updatedUser = {
+          userID: this.selectedUser.userID,
+          userProfile: this.userProfile,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          age: +this.age,
+          gender: this.gender,
+          emailAddress: this.emailAddress,
+          userRole: this.userRole,
+          pswd: this.pswd
+        };
+
+        try {
+          await this.updateUser(updatedUser);
+          console.log('User updated successfully.');
+        } catch (error) {
+          console.error('Error updating user:', error);
+        }
+
       } else {
-        await this.register(this.user);
+        const payload = {
+          userProfile: this.userProfile,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          age: +this.age,
+          gender: this.gender,
+          emailAddress: this.emailAddress,
+          userRole: this.userRole,
+          pswd: this.pswd
+        };
+
+        try {
+          await this.register(payload);
+          console.log('User registered successfully.');
+        } catch (error) {
+          console.error('Error saving user:', error);
+        }
       }
+
+      await this.fetchUsers();
       this.resetForm();
-      this.fetchUsers();
     },
+
     editUser(user) {
-      this.user = { ...user };
-      this.userID = user.id;
-      // Trigger modal to show up
-      const modal = new bootstrap.Modal(document.getElementById('adminAddUser'));
-      modal.show();
+      this.selectedUser = user;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.age = user.age;
+      this.gender = user.gender;
+      this.emailAddress = user.emailAddress;
+      this.userRole = user.userRole;
+      this.pswd = '';
     },
-    deleteUser(id) {
-      this.deleteUser(id);
-      this.fetchUsers();
+
+    async deleteUser(userID) {
+      try {
+        await this.deleteUserById(userID);
+        console.log('User deleted successfully.');
+        await this.fetchUsers();
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
     },
+
     resetForm() {
-      this.user = {
-        username: '',
-        password: '',
-        email: ''
-      };
-      this.userID = null;
+      this.firstName = '';
+      this.lastName = '';
+      this.age = '';
+      this.gender = '';
+      this.emailAddress = '';
+      this.userRole = '';
+      this.pswd = '';
+      this.selectedUser = null;
     }
   },
-  created() {
-    this.fetchUsers();
+  async mounted() {
+    try {
+      await this.fetchUsers(); 
+    } finally {
+      this.loading = false;
+    }
   }
 };
 </script>
-
-<style scoped>
-/* Your styles here */
-</style>
-
 
 <style scoped>
 #admin-page {
@@ -174,9 +258,13 @@ export default {
   background-color: #532823;
   color: white;
 }
-#userTable th, #userTable td {
+
+#userTable th {
   padding: 1rem;
+  background-color: #532823; 
+  color: white; 
 }
+
 #userTable tbody tr:nth-child(even) {
   background-color: #b37f55f8; 
 }
@@ -200,40 +288,32 @@ export default {
   border-radius: 0.5rem;
   border: none;
 }
-
 .modal-header {
   border-bottom: 1px solid #6b3a30;
 }
-
 .modal-header .btn-close {
   filter: invert(1); 
 }
-
 .modal-body {
   padding: 2rem;
 }
-
 .modal-body .form-control {
   background-color: #6b3a30; 
   border: 1px solid #532823; 
   color: #fff; 
 }
-
 .modal-body .form-control:focus {
   border-color: #8d5c51; 
   box-shadow: 0 0 0 0.2rem rgba(141, 92, 81, 0.25); 
 }
-
 .modal-footer {
   border-top: 1px solid #6b3a30; 
 }
-
 .btn-secondary {
   background-color: #532823; 
   border-color: #532823; 
   color: #fff; 
 }
-
 .btn-secondary:hover {
   background-color: #6b3a30; 
   border-color: #6b3a30; 

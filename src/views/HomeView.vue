@@ -6,7 +6,7 @@
     <div class="content">
       <h1 class="display-1">Welcome to Ahava Lounge</h1>
       <p class="lead">A prestige cinema and restaurant combined, offering you an elegant experience where you can savour gourmet dining and enjoy your favorite movies all in one place.</p>
-      <button type="button" class="booking-page-link">BOOK NOW</button>
+      <router-link to="/booking"><button type="button" class="booking-page-link">BOOK NOW</button></router-link>
     </div>
   </div>
 </template>
