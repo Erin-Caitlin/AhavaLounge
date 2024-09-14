@@ -3,7 +3,7 @@ class Meals {
     fetchMeals(req, res) {
         try {
             const strQry = `
-            SELECT mealID, mealPackage, mealDescription, mealImage, mealPrice
+            SELECT mealID, mealPackage, mealDescription, mealPrice
             FROM Meals;
             `
             db.query(strQry, (err, results) => {
@@ -23,7 +23,7 @@ class Meals {
     recentMeals(req, res) {
         try {
             const strQry = `
-            SELECT mealID, mealPackage, mealDescription, mealImage, mealPrice
+            SELECT mealID, mealPackage, mealDescription, mealPrice
             FROM Meals
             ORDER BY mealID DESC
             LIMIT 5;
@@ -45,7 +45,7 @@ class Meals {
     fetchMeal(req, res) {
         try {
             const strQry = `
-            SELECT mealID, mealPackage, mealDescription, mealImage, mealPrice
+            SELECT mealID, mealPackage, mealDescription, mealPrice
             FROM Meals
             WHERE mealID = ${req.params.id};
             `

@@ -16,7 +16,7 @@ moviesRouter.get('/recent', (req, res) => {
     movies.recentMovies(req, res);
 });
 
-moviesRouter.get('/:id', verifyAToken, (req, res) => {
+moviesRouter.get('/:id', (req, res) => {
     movies.fetchMovie(req, res);
 });
 
