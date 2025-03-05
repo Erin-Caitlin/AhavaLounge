@@ -50,6 +50,21 @@ const routes = [
     path: '/contact',
     name: 'contact',
     component: () => import('../views/ContactView.vue')
+  },
+  {
+    path: '/booking-start',
+    name: 'booking-start',
+    component: () => import('../views/BookingStartView.vue')
+  },
+  {
+    path: '/seats',
+    name: 'seats',
+    component: () => import('../views/ChooseSeatsView.vue')
+  },
+  {
+    path: '/snacks',
+    name: 'snacks',
+    component: () => import('../views/ChooseSnacksView.vue')
   }
 ]
 

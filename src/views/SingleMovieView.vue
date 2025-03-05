@@ -31,7 +31,7 @@
           <p class="movie-info">
             <span class="info-label">Year:</span> {{ movie.releaseDate }}
           </p>
-          <button class="btn-book" @click="addToBookingList">Book Now</button>
+          <button class="btn-book" @click="startBooking">Book Now</button>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@ export default {
     }
   },
   methods: {
-    addToBookingList() {
+    startBooking() {
       const movieToAdd = { ...this.movie, seats: 1 };
       let bookingList = JSON.parse(localStorage.getItem('booking')) || [];
       const existingIndex = bookingList.findIndex(m => m.id === movieToAdd.id);
@@ -67,7 +67,7 @@ export default {
       }
       
       localStorage.setItem('booking', JSON.stringify(bookingList));
-      this.$router.push('/order-list');
+      this.$router.push('/booking-start');
     }
   },
   mounted() {
