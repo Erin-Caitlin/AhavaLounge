@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-const api = 'https://ahavalounge-2.onrender.com//';
+const api = 'https://ahavalounge-2.onrender.com/';
 
 export default createStore({
   state: {
